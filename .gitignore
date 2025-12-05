@@ -1,0 +1,10 @@
+.vscode
+experiments
+test
+logs
+out
+output
+__pycache__
+
+*.pyc
+*.log

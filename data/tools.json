@@ -1,0 +1,210 @@
+{
+    "zoom_in_one_subfigure": {
+        "name": "zoom_in_one_subfigure",
+        "description": "Zooms into one subchart in a multi-chart image by specifying its row and column position for focused analysis. You can use this tool to zoom in the subchart for better analysis in the next steps (e.g., the question only focuses on one subchart in the whole image).",
+        "constraints": "This tool only supports the charts that contain multiple subcharts. It cannot be used to subchart comparing.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "image_path": {
+                    "type": "string",
+                    "description": "Absolute path to the input image (e.g., \"/data/image_1.jpg\")."
+                },
+                "output_path": {
+                    "type": "string",
+                    "description": "Path to save the visualization result (e.g., \"output.jpg\")."
+                },
+                "row": {
+                    "type": "integer",
+                    "description": "Row number of the subfigure (starting from 1)."
+                },
+                "col": {
+                    "type": "integer",
+                    "description": "Column number of the subfigure (starting from 1)."
+                }
+            },
+            "required": [
+                "image_path",
+                "output_path",
+                "row",
+                "col"
+            ],
+            "additionalProperties": false
+        },
+        "strict": true
+    },
+    "zoom_in_specific_region_via_xy_axis_for_number_counting": {
+        "name": "zoom_in_specific_region_via_xy_axis_for_counting",
+        "description": "Zooms into a specific local region of the image for number counting based on a given range of x/y axis values. You can input either x_start/x_end or y_start/y_end to obtain the region to be zoomed in. You can use a broader range of x/y values to obtain a larger region to be zoomed in.",
+        "constraints": "This tool does not support the images that contain multiple subcharts.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "image_path": {
+                    "type": "string",
+                    "description": "Absolute path to the input image (e.g., \"/data/image_1.jpg\")."
+                },
+                "output_path": {
+                    "type": "string",
+                    "description": "Path to save the visualization result (e.g., \"output.jpg\")."
+                },
+                "x_axis_start": {
+                    "type": "string",
+                    "description": "The start x-axis value of the region to be zoomed in."
+                },
+                "x_axis_end": {
+                    "type": "string",
+                    "description": "The end x-axis value of the region to be zoomed in."
+                },
+                "y_axis_start": {
+                    "type": "string",
+                    "description": "The start y-axis value of the region to be zoomed in."
+                },
+                "y_axis_end": {
+                    "type": "string",
+                    "description": "The end y-axis value of the region to be zoomed in."
+                }
+            },
+            "required": [
+                "image_path",
+                "output_path"
+            ],
+            "additionalProperties": false
+        },
+        "strict": true
+    },
+    "add_axvline": {
+        "name": "add_axvline",
+        "description": "Adds a vertical or horizontal reference line on a chart by locating the specified axis value and drawing a line in the chosen color (default: red). This tool can be used to add a reference line on the chart for better analysis in the next steps, such as comparing values with a specific threshold.",
+        "constraints": "This tool does not support images that contain multiple subcharts.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "image_path": {
+                    "type": "string",
+                    "description": "Absolute path to the input image (e.g., \"/data/image_1.jpg\")."
+                },
+                "output_path": {
+                    "type": "string",
+                    "description": "Path to save the image with the added line (e.g., \"output.jpg\")."
+                },
+                "axis": {
+                    "type": "string",
+                    "enum": [
+                        "x",
+                        "y"
+                    ],
+                    "description": "Axis to add the line on, must be \"x\" or \"y\"."
+                },
+                "value": {
+                    "type": "string",
+                    "description": "The specific coordinate value on the axis (e.g., \"100\" or \"2021-06-01\")."
+                },
+                "axvline_color": {
+                    "type": "string",
+                    "description": "Color for the line. Default is \"red\"."
+                }
+            },
+            "required": [
+                "image_path",
+                "output_path",
+                "axis",
+                "value"
+            ],
+            "additionalProperties": false
+        },
+        "strict": true
+    },
+    "mask_irrelevant_data_using_legend": {
+        "name": "focus_on_specific_data",
+        "description": "Masks lines or bars in the chart using the legend items with specific colors, keeping only the relevant data visible. This tool can be used to mask the irrelevant legend items in the chart to focus on specific data.",
+        "constraints": "This tool does not support images that contain multiple subcharts. The legend items should be text labels in the chart legend. It only supports images where each legend item has a different color.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "image_path": {
+                    "type": "string",
+                    "description": "Absolute path to the input image (e.g., \"/data/image_1.jpg\")."
+                },
+                "output_path": {
+                    "type": "string",
+                    "description": "Path to save the visualization result (e.g., \"output.jpg\")."
+                },
+                "focused_names_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The legend items to be kept (e.g., [\"Legend1\", \"Legend2\"])."
+                },
+                "mask_names_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The legend items to be masked (e.g., [\"Legend3\"]). This parameter must not overlap with focused_names_list and at least one should be provided."
+                },
+                "extend_to_light_area": {
+                    "type": "boolean",
+                    "description": "If it is a line chart with light-colored areas around the lines, set to True to include those areas."
+                }
+            },
+            "required": [
+                "image_path",
+                "output_path",
+                "focused_names_list",
+                "mask_names_list"
+            ],
+            "additionalProperties": false
+        },
+        "strict": true
+    },
+    "compile_code": {
+        "name": "compile_code",
+        "description": "Executes the provided Python code for numerical calculation and returns the result or any error message. You can use this tool to execute Python code for numerical calculation by passing the code as a string. The final result should be printed in the code.",
+        "constraints": "The code should be valid Python code that can be executed and should not contain any input, file, or plotting operations.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "The Python code to be executed (e.g., \"result = 1 + 1\\nprint(result)\")."
+                }
+            },
+            "required": [
+                "code"
+            ],
+            "additionalProperties": false
+        },
+        "strict": true
+    },
+    "extract_information": {
+        "name": "extract_information",
+        "description": "Performs information extraction, pattern recognition, or value comparison on the provided image to help answer a question. You can use this tool to analyze the image and answer the question based on the image content. This tool can be used to analyze either the original or a processed (edited) image.",
+        "constraints": "Your question should be sufficiently specific and relevant to the image content.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "image_path": {
+                    "type": "string",
+                    "description": "Absolute path to the input image (e.g., \"/data/image_1.jpg\")."
+                },
+                "question": {
+                    "type": "string",
+                    "description": "The question to be answered."
+                },
+                "related_info": {
+                    "type": "string",
+                    "description": "Any relevant information or conclusions from previous steps that might help answer the current question, or tips (e.g., \"For better analysis, a vertical line has been added at x=100\")."
+                }
+            },
+            "required": [
+                "image_path",
+                "question",
+                "related_info"
+            ],
+            "additionalProperties": false
+        },
+        "strict": true
+    }
+}
