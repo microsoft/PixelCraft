@@ -71,7 +71,7 @@ pip install -r requirements.txt
 ### Inference
 
 ```bash
-vllm serve /path/to/grounding_model \
+vllm serve zss01/PixelCraft-3B \
     --host 127.0.0.1 \
     --port 8000 \
     --seed 42 \
