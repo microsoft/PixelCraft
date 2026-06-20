@@ -16,7 +16,7 @@ torchvision
 tqdm
 anls
 scikit-learn
-vllm==0.10.2
+vllm==0.23.0
 flaml[automl]
 bm3d
 opencv-contrib-python
